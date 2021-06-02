@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>view</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+td
+{
+    width: 150px;
+    text-align: center;
+    border: 1px solid black;
+    padding: 0 8px 0 0;
+
+
+
+}
+
+th
+{
+    border: 1px solid black;
+    padding: 10px;
+    font-size: 20px;
+
+
+}
+
+body
+{
+    background-color: #2196F3;
+    font-family: "Lato", sans-serif;
+}
+
+tbody td
+{
+    background-color: white;
+    font-size: 18px;
+
+}
+
+table
+{
+    border-spacing: 0px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+body{font-family: "Lato", sans-serif}
+.w3-bar {font-family: "Montserrat", sans-serif}
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="w3-top">
+    <div class="w3-bar w3-orange w3-card w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+           href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i
+                class="fa fa-bars"></i></a>
+        <a href="/" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+        <a href="/create" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Add Invoice</a>
+        <a href="/view" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">View All
+            Invoices</a>
+
+
+    </div>
+    <table class="w3-container w3-center" style="padding:128px 16px">
+        <thead>
+        <tr class="w3-orange">
+            <th>Invoice ID</th>
+            <th>Product Name</th>
+            <th>Price u.p</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Client Name</th>
+            <th>Postal Code</th>
+            <th>Street</th>
+            <th>Invoice Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tuple in tuples %}
+        <tr>
+            <td>{{ tuple.invoice.id }}</td>
+            <td>{{ tuple.product.product_name }}</td>
+            <td><span>{{ tuple.product.price }}</span><span data-prefix>PLN</span></td>
+            <td>{{ tuple.invoice.quantity }}</td>
+            <td><span>{{ tuple.invoice.total_price }}</span><span data-prefix>PLN</span></td>
+            <td>{{ tuple.client.name }}</td>
+            <td>{{ tuple.client.postal_code }}</td>
+            <td>{{ tuple.client.street }}</td>
+            <td>{{ tuple.invoice.invoice_date }}</td>
+            <td>
+                <form action="/preview/{{ tuple.invoice.id }}" method="POST">
+                    <input class="w3-container w3-button w3-green w3-padding-medium w3-large" type="submit"
+                           value="Generate" name="select">
+                </form>
+                <form action="/delete/{{ tuple.invoice.id }}" method="GET">
+                    <input class="w3-container w3-button w3-red w3-padding-medium w3-large" type="submit"
+                           value="Delete" name="delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
