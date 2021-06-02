@@ -91,7 +91,6 @@ def delete_set(inv_id):
     delete_client(invoice_object)
     delete_invoice(invoice_object)
 
-
 @view_blueprint.route('/view', methods=['GET', 'POST'])
 def view():
     invoices = Invoice.query.all()
