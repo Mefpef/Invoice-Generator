@@ -1,12 +1,12 @@
 import io
 
 from flask import render_template, Blueprint, request, url_for, redirect, flash, session, send_file
-from .database import Admins, Clients, Invoice, Product
-from . import db
+from .database import Admins
 import hashlib
-from datetime import date, datetime
-from collections import namedtuple
+from datetime import datetime
 from weasyprint import HTML
+from .functionality import *
+from collections import namedtuple
 
 home_blueprint = Blueprint('home_blueprint', __name__)
 login_blueprint = Blueprint('login', __name__)
@@ -17,79 +17,6 @@ pre_blueprint = Blueprint('preview', __name__)
 download_pdf_blueprint = Blueprint('download_pdf', __name__)
 delete_invoice_blueprint = Blueprint('delete', __name__)
 
-
-def add_invoice_to_db(new_invoice: Invoice) -> None:
-    db.session.add(new_invoice)
-    db.session.commit()
-
-
-def add_product_to_db(new_product: Product) -> None:
-    db.session.add(new_product)
-    db.session.commit()
-
-
-def add_client_to_db(new_client: Clients) -> None:
-    db.session.add(new_client)
-    db.session.commit()
-
-
-def payment_date_counter() -> int:
-    today = date.today()
-    payment_day = date(today.year, today.month, 20)
-    diff = payment_day - today
-
-    if today.day >= 20:
-        payment_day = date(today.year, today.month + 1, 20)
-        diff = payment_day - today
-
-    return diff.days
-
-
-def get_actual_date():
-    today = date.today()
-    return today.strftime("%d.%m.%Y")
-
-
-def count_total_price(price, quantity):
-    total_price = int(quantity) * int(price)
-    return total_price
-
-
-def get_data_to_generate(generated_inv):
-    ToGenerate = namedtuple("Generated_Data", 'product client')
-
-    associated_client = Clients.query.get(generated_inv.id)
-    associated_product = Product.query.filter_by(invoice_id=generated_inv.id).first()
-
-    return ToGenerate(product=associated_product, client=associated_client)
-
-
-def get_template(html, **kwargs):
-    return render_template(html, kwargs=kwargs)
-
-
-def delete_invoice(invoice_object):
-    db.session.delete(invoice_object)
-    db.session.commit()
-
-
-def delete_product(invoice_object):
-    product_to_delete = Product.query.filter_by(invoice_id=invoice_object.id).first()
-    db.session.delete(product_to_delete)
-    db.session.commit()
-
-
-def delete_client(invoice_object):
-    client_to_delete = Clients.query.get(invoice_object.client_id)
-    db.session.delete(client_to_delete)
-    db.session.commit()
-
-
-def delete_set(inv_id):
-    invoice_object = Invoice.query.get(inv_id)
-    delete_product(invoice_object)
-    delete_client(invoice_object)
-    delete_invoice(invoice_object)
 
 @view_blueprint.route('/view', methods=['GET', 'POST'])
 def view():
@@ -176,10 +103,12 @@ def download_pdf(id):
         generated_inv = Invoice.query.get(id)
         data = get_data_to_generate(generated_inv)
         try:
-            rendered_pdf = render_template('testinvoice_pdf.html', invid=generated_inv.id, client_name=data.client.name,
+            rendered_pdf = render_template('invoice_pdf.html', invid=generated_inv.id, client_name=data.client.name,
                                            product_name=data.product.product_name, unit_price=data.product.price,
                                            postal_code=data.client.postal_code, street=data.client.street,
-                                           quantity=generated_inv.quantity, date=generated_inv.invoice_date)
+                                           quantity=generated_inv.quantity, date=generated_inv.invoice_date,
+                                           inv_date=date.today(),
+                                           total_price=generated_inv.total_price)
             html = HTML(string=rendered_pdf)
             generated_pdf = html.write_pdf()
             return send_file(
@@ -200,7 +129,8 @@ def preview(id):
         return render_template('preview.html', invid=generated_inv.id, client_name=data.client.name,
                                product_name=data.product.product_name, unit_price=data.product.price,
                                postal_code=data.client.postal_code, street=data.client.street,
-                               quantity=generated_inv.quantity, date=generated_inv.invoice_date)
+                               quantity=generated_inv.quantity, date=generated_inv.invoice_date, inv_date=date.today(),
+                               total_price=generated_inv.total_price)
 
 
 @delete_invoice_blueprint.route('/delete/<id>', methods=['GET'])
