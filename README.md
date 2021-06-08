@@ -68,7 +68,7 @@ If you want create your own user you have to add it manually to database.
 <img src="https://i.ibb.co/7jQt3fw/preview-invoice-page.jpg" alt="preview-invoice-page" height="280">
 
 #### Preview pdf format:
-<img src="https://i.ibb.co/1JTDzGk/pdf-preview-page.jpg" alt="pdf-preview-page" border="0">
+<img src="https://i.ibb.co/1JTDzGk/pdf-preview-page.jpg" alt="pdf-preview-page" width="600">
 
 
 __Enjoy!__
