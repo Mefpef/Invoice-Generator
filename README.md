@@ -1,11 +1,11 @@
 # Invoice-Generator-APP
 Invoice generator made on Flask.
 
-##Project description
+## Project description
 
 Hi everyone! This is my first flask project. Its web application which allows you create and download invoice in PDF format.
 
-###Functionality
+### Functionality
 * Create invoice
 * Invoice payment counter
 * Preview all invoices
@@ -13,13 +13,13 @@ Hi everyone! This is my first flask project. Its web application which allows yo
 * Transfer invoice from html to PDF and download it
 
 
-###Stack
+### Stack
 * Python 3
 * Flask
 
 
 
-###Installation
+### Installation
 
 Download or clone repository from GH. Install libraries from requirements.txt, to do this open your terminal and type:
 ```
@@ -54,26 +54,25 @@ Account name and password for testing application is : admin/admin
 
 If you want create your own user you have to add it manually to database.
 
-###Sample photos of application
-####Login:
-<img src="https://i.ibb.co/b1CW1Mn/login-page.jpg" alt="login-page" height="280">
+### Sample photos of application
+#### Login:
+<img src="https://i.ibb.co/b1CW1Mn/login-page.jpg" alt="login-page" height="280" width="600">
 
-####Admin panel:
+#### Admin panel:
 <img src="https://i.ibb.co/7JYcCQg/admin-panel-page.jpg" alt="admin-panel-page" height="280">
 
-####Add invoice:
+#### Add invoice:
 <img src="https://i.ibb.co/NYLDr3q/add-invoice-page.jpg" alt="add-invoice-page" height="280">
 
-####Preview:
+#### Preview:
 <img src="https://i.ibb.co/7jQt3fw/preview-invoice-page.jpg" alt="preview-invoice-page" height="280">
 
-####Preview pdf format:
+#### Preview pdf format:
 <img src="https://i.ibb.co/1JTDzGk/pdf-preview-page.jpg" alt="pdf-preview-page" border="0">
 
 
-#####Enjoy!
+__Enjoy!__
 
-#####Contact:
-```
-zitarukm@gmail.com
-```
+__Contact:__
+
+>zitarukm@gmail.com
