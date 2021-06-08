@@ -54,7 +54,7 @@ table.meta th { width: 60%; font-size:125%; }
 table.meta td { width: 60%; font-size:125%; }
 /* table items */
 
-table.inventory { clear: both; width: 100%; }
+table.inventory { clear: both; width: 100%; font-size:115%; }
 table.inventory th { font-weight: bold; text-align: center; }
 table.inventory td:nth-child(1) { width: 26%; }
 table.inventory td:nth-child(2) { width: 38%; }
@@ -79,7 +79,7 @@ table.balance td { text-align: center; }
         <table class="meta">
             <tr>
                 <th><span>Invoice #</span></th>
-                <td><span contenteditable>fill invoice num</span></td>
+                <td><span>{{ inv_date }}</span></td>
             </tr>
             <tr>
                 <th><span>Date</span></th>
@@ -107,7 +107,7 @@ table.balance td { text-align: center; }
             <td><span>{{ product_name }}</span></td>
             <td><span>{{ unit_price }}</span><span data-prefix> PLN</span></td>
             <td><span>{{ quantity }}</span></td>
-            <td><span>600.00</span><span data-prefix> PLN</span></td>
+            <td><span>{{ total_price }}</span><span data-prefix> PLN</span></td>
         </tr>
         </tbody>
     </table>
