@@ -1,5 +1,5 @@
 from datetime import date
-from . import db
+from app.service.db import db
 
 
 class Invoice(db.Model):

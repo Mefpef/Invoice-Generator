@@ -1,7 +1,9 @@
-from .database import Clients, Invoice, Product
-from . import db
+from app.models import Clients, Invoice, Product
+
 from datetime import date
 from collections import namedtuple
+
+from app.service.db import db
 
 
 def add_invoice_to_db(new_invoice: Invoice) -> None:
