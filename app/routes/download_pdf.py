@@ -4,7 +4,7 @@ from datetime import date
 from flask import Blueprint, request, render_template, send_file, flash, redirect, url_for
 from weasyprint import HTML
 
-from app.models import Invoice
+
 from app.utils.utils import get_data_to_generate
 
 download_pdf_blueprint = Blueprint('download_pdf', __name__)

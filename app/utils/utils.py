@@ -1,4 +1,6 @@
-from app.models import Clients, Invoice, Product
+from app.models.invoice import Invoice
+from app.models.contractor import Contractor
+from app.models.product import Product
 
 from datetime import date
 from collections import namedtuple
@@ -16,7 +18,7 @@ def add_product_to_db(new_product: Product) -> None:
     db.session.commit()
 
 
-def add_client_to_db(new_client: Clients) -> None:
+def add_client_to_db(new_client: Contractor) -> None:
     db.session.add(new_client)
     db.session.commit()
 
@@ -46,7 +48,7 @@ def count_total_price(price, quantity):
 def get_data_to_generate(generated_inv):
     ToGenerate = namedtuple("Generated_Data", 'product client')
 
-    associated_client = Clients.query.get(generated_inv.id)
+    associated_client = Contractor.query.get(generated_inv.id)
     associated_product = Product.query.filter_by(invoice_id=generated_inv.id).first()
 
     return ToGenerate(product=associated_product, client=associated_client)
@@ -64,7 +66,7 @@ def delete_product(invoice_object):
 
 
 def delete_client(invoice_object):
-    client_to_delete = Clients.query.get(invoice_object.client_id)
+    client_to_delete = Contractor.query.get(invoice_object.client_id)
     db.session.delete(client_to_delete)
     db.session.commit()
 

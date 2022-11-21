@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from flask import request, Blueprint, render_template, flash, redirect, url_for
 
-from app.models import Invoice, Clients, Product
+from app.models.user import User
 from app.utils.utils import get_data_to_generate, add_client_to_db, count_total_price, add_invoice_to_db, \
     add_product_to_db, get_actual_date, delete_set
 
@@ -13,10 +13,10 @@ add_invoice_blueprint = Blueprint('create', __name__)
 delete_invoice_blueprint = Blueprint('delete', __name__)
 
 
-@preview_blueprint.route('/preview/<id>', methods=["POST"])
+@preview_blueprint.route('/preview/<id>', methods=['POST'])
 def preview(id):
     if request.method == "POST":
-        generated_inv = Invoice.query.get(id)
+        generated_inv = User.invoice.query.get(id)
         data = get_data_to_generate(generated_inv)
         return render_template('preview.html', invid=generated_inv.id, client_name=data.client.name,
                                product_name=data.product.product_name, unit_price=data.product.price,
@@ -27,12 +27,12 @@ def preview(id):
 
 @previews_blueprint.route('/previews', methods=['GET', 'POST'])
 def view():
-    invoices = Invoice.query.all()
+    invoices = User.invoice.query.all()
 
     TripleData = namedtuple('Invoice_Data', 'invoice client product')
     tuples = []
     for invoice in invoices:
-        associated_client = Clients.query.get(invoice.client_id)
+        associated_client = Client.query.get(invoice.client_id)
         associated_product = Product.query.filter_by(invoice_id=invoice.id).first()
 
         tuples.append(TripleData(invoice, associated_client, associated_product))
@@ -47,7 +47,7 @@ def create_invoice():
         postal_code = request.form['postal_code']
         street = request.form['street']
 
-        new_client = Clients(name, postal_code, street)
+        new_client = User.contractor(name, postal_code, street)
         add_client_to_db(new_client)
 
         invoice_date = request.form['invoice_date']
