@@ -7,6 +7,7 @@ from app.models.user import User
 login_blueprint = Blueprint('login', __name__)
 
 
+@login_blueprint.route('/')
 @login_blueprint.route('/login', methods=["POST", "GET"])
 def login():
     if request.method == 'POST':
@@ -26,4 +27,4 @@ def login():
         else:
             flash('Username or password incorrect !', 'warning')
 
-    return render_template("index.html")
+    return render_template("base.html")
