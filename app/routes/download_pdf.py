@@ -5,7 +5,7 @@ from flask import Blueprint, request, render_template, send_file, flash, redirec
 from weasyprint import HTML
 
 
-from app.utils.utils import get_data_to_generate
+from app.utils.helpers import get_data_to_generate
 
 download_pdf_blueprint = Blueprint('download_pdf', __name__)
 

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, url_for, redirect
 
-from app.utils.utils import payment_date_counter
+from app.utils.helpers import payment_date_counter
 
 admin_blueprint = Blueprint('admin_panel', __name__)
 

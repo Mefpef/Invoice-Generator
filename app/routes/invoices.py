@@ -4,7 +4,7 @@ from datetime import date, datetime
 from flask import request, Blueprint, render_template, flash, redirect, url_for
 
 from app.models.user import User
-from app.utils.utils import get_data_to_generate, add_client_to_db, count_total_price, add_invoice_to_db, \
+from app.utils.helpers import get_data_to_generate, add_client_to_db, count_total_price, add_invoice_to_db, \
     add_product_to_db, get_actual_date, delete_set
 
 preview_blueprint = Blueprint('preview', __name__)
