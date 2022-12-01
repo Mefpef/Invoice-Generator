@@ -1,11 +1,12 @@
-from datetime import date
+import datetime
 from app.service.db import db
+
 
 
 class Invoice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     total_price = db.Column(db.Float, nullable=False)
-    invoice_date = db.Column(db.DateTime, default=date.today(), nullable=False)
+    invoice_date = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
     quantity = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    product_invoice_id = db.Column(db.Integer, db.ForeignKey('product.id'))

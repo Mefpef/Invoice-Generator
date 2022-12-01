@@ -1,81 +1,25 @@
 {% extends 'base.html' %}
 {% block title %} <title>view</title> {% endblock %}
 {% block style %}
-<style>
-td
-{
-    width: 150px;
-    text-align: center;
-    border: 1px solid black;
-    padding: 0 8px 0 0;
-}
 
-th
-{
-    border: 1px solid black;
-    padding: 10px;
-    font-size: 20px;
-}
-
-body
-{
-    background-color: #2196F3;
-    font-family: "Lato", sans-serif;
-}
-
-tbody td
-{
-    background-color: white;
-    font-size: 18px;
-}
-
-table
-{
-    border-spacing: 0px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-</style>
 {% endblock %}
 
 {%block content%}
 <table class="w3-container w3-center" style="padding:128px 16px">
     <thead>
     <tr class="w3-orange">
-        <th>Invoice ID</th>
-        <th>Product Name</th>
-        <th>Price u.p</th>
-        <th>Quantity</th>
+        <th>Invoice number</th>
+        <th>Contractor Name</th>
         <th>Total Price</th>
-        <th>Client Name</th>
-        <th>Postal Code</th>
-        <th>Street</th>
         <th>Invoice Date</th>
     </tr>
     </thead>
     <tbody>
-    {% for tuple in tuples %}
+    {% for x in product %}
     <tr>
-        <td>{{ tuple.invoice.id }}</td>
-        <td>{{ tuple.product.product_name }}</td>
-        <td><span>{{ tuple.product.price }}</span><span data-prefix>PLN</span></td>
-        <td>{{ tuple.invoice.quantity }}</td>
-        <td><span>{{ tuple.invoice.total_price }}</span><span data-prefix>PLN</span></td>
-        <td>{{ tuple.client.name }}</td>
-        <td>{{ tuple.client.postal_code }}</td>
-        <td>{{ tuple.client.street }}</td>
-        <td>{{ tuple.invoice.invoice_date }}</td>
-        <td>
-            <form action="/preview/{{ tuple.invoice.id }}" method="POST">
-                <input class="w3-container w3-button w3-green w3-padding-medium w3-large" type="submit"
-                       value="Generate" name="select">
-            </form>
-            <form action="/delete/{{ tuple.invoice.id }}" method="GET">
-                <input class="w3-container w3-button w3-red w3-padding-medium w3-large" type="submit"
-                       value="Delete" name="delete">
-            </form>
-        </td>
+        <td>{% for p in x.product %}</td>
+            {{ p.name }}
+        {% endfor %}
     </tr>
     {% endfor %}
     </tbody>

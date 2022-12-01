@@ -12,4 +12,4 @@ class Contractor(db.Model):
     phone_number = db.Column(db.String(15))
     email_address = db.Column(db.String(50))
     tax_number = db.Column(db.String(20), nullable=False)
-
+    user_contractor_id = db.Column(db.Integer, db.ForeignKey('user.id'))

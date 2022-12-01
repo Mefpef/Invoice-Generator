@@ -6,5 +6,5 @@ class User(db.Model):
     login = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(30), nullable=False)
     invoice = db.relationship('Invoice', backref='user')
-    product = db.relationship('Product', backref='product_')
-    contractor = db.relationship('Contractor', backref='users_contractor')
+    product = db.relationship('Product', backref='user_product', lazy='joined')
+    contractor = db.relationship('Contractor', backref='user_contractor')

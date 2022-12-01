@@ -1,9 +1,10 @@
-from collections import namedtuple
+
 from datetime import date, datetime
-
+from app.service.db import db
 from flask import request, Blueprint, render_template, flash, redirect, url_for
-
 from app.models.user import User
+from app.models.product import Product
+from app.models.contractor import Contractor
 from app.utils.helpers import get_data_to_generate, add_client_to_db, count_total_price, add_invoice_to_db, \
     add_product_to_db, get_actual_date, delete_set
 
@@ -27,17 +28,9 @@ def preview(id):
 
 @previews_blueprint.route('/previews', methods=['GET', 'POST'])
 def view():
-    invoices = User.invoice.query.all()
 
-    TripleData = namedtuple('Invoice_Data', 'invoice client product')
-    tuples = []
-    for invoice in invoices:
-        associated_client = Client.query.get(invoice.client_id)
-        associated_product = Product.query.filter_by(invoice_id=invoice.id).first()
-
-        tuples.append(TripleData(invoice, associated_client, associated_product))
-
-    return render_template('previews.html', tuples=tuples)
+    user = User.query.all()
+    return render_template('previews.html', product=user)
 
 
 @add_invoice_blueprint.route('/add', methods=["POST", "GET"])
@@ -57,16 +50,14 @@ def create_invoice():
         product_name = request.form['product_name']
         price = request.form['price']
 
-        new_invoice = Invoice(invoice_datetime, quantity, client_id=new_client.id,
-                              total_price=count_total_price(price, quantity))
+        new_invoice = User.invoice(invoice_datetime, quantity, client_id=new_client.id,
+                                   total_price=count_total_price(price, quantity))
         add_invoice_to_db(new_invoice)
 
-        new_product = Product(product_name, price, invoice_id=new_invoice.id)
+        new_product = User.product(product_name, price, invoice_id=new_invoice.id)
         add_product_to_db(new_product)
         flash('Invoice added successfully!', 'success')
     return render_template('add_invoice.html', today=get_actual_date())
-
-
 
 
 @delete_invoice_blueprint.route('/delete/<id>', methods=['GET'])
