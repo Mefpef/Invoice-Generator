@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -23,10 +24,7 @@
                        class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                         <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                             <use xlink:href="#bootstrap"/>
-                        </svg>
-                        {% if current_user.is_authenticated %}
-                        Currently logged: {{ current_user.name }}!
-                        {% endif %}
+                        </svg> {% block logged %} {% endblock %}
                     </a>
 
                     <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
@@ -39,7 +37,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/add" class="nav-link text-white">
+                            <a href="#" class="nav-link text-white">
                                 <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                     <use xlink:href="#/add"/>
                                 </svg>
@@ -57,17 +55,9 @@
                         <li>
                             <a href="#" class="nav-link text-white">
                                 <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                    <use xlink:href="#table"/>
+                                    <use xlink:href="#table"></use>
                                 </svg>
                                 Products
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                    <use xlink:href="#people-circle"/>
-                                </svg>
-                                Contractors
                             </a>
                         </li>
                     </ul>

@@ -1,5 +1,10 @@
 
 from datetime import date, datetime
+
+from flask_login import login_required
+
+from app.utils.login_auth import login_manager
+
 from app.service.db import db
 from flask import request, Blueprint, render_template, flash, redirect, url_for
 from app.models.user import User
@@ -27,6 +32,7 @@ def preview(id):
 
 
 @previews_blueprint.route('/previews', methods=['GET', 'POST'])
+@login_required
 def view():
 
     user = User.query.all()

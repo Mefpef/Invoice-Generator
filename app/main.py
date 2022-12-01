@@ -24,6 +24,7 @@ app.register_blueprint(register_blueprint)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 login_manager.init_app(app)
+login_manager.login_view = 'previews.view'
 app.secret_key = b'_5#y2L"F4Q8z/nxec'
 
 db.init_app(app)
