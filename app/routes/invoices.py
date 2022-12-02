@@ -1,15 +1,9 @@
-
 from datetime import date, datetime
 
+from flask import request, Blueprint, render_template, flash, redirect, url_for
 from flask_login import login_required
 
-from app.utils.login_auth import login_manager
-
-from app.service.db import db
-from flask import request, Blueprint, render_template, flash, redirect, url_for
 from app.models.user import User
-from app.models.product import Product
-from app.models.contractor import Contractor
 from app.utils.helpers import get_data_to_generate, add_client_to_db, count_total_price, add_invoice_to_db, \
     add_product_to_db, get_actual_date, delete_set
 
@@ -17,6 +11,7 @@ preview_blueprint = Blueprint('preview', __name__)
 previews_blueprint = Blueprint('previews', __name__)
 add_invoice_blueprint = Blueprint('create', __name__)
 delete_invoice_blueprint = Blueprint('delete', __name__)
+download_blueprint = Blueprint('download', __name__)
 
 
 @preview_blueprint.route('/preview/<id>', methods=['POST'])
@@ -34,7 +29,6 @@ def preview(id):
 @previews_blueprint.route('/previews', methods=['GET', 'POST'])
 @login_required
 def view():
-
     user = User.query.all()
     return render_template('previews.html', product=user)
 
@@ -70,5 +64,29 @@ def create_invoice():
 def delete(id):
     if request.method == 'GET':
         delete_set(id)
+
+    return redirect(url_for('view.view'))
+
+
+@download_blueprint.route('/download/<id>', methods=["POST"])
+def download_pdf(id):
+    if request.method == "POST":
+        generated_inv = Invoice.query.get(id)
+        data = get_data_to_generate(generated_inv)
+        try:
+            rendered_pdf = render_template('download_pdf.html', invid=generated_inv.id, client_name=data.client.name,
+                                           product_name=data.product.product_name, unit_price=data.product.price,
+                                           postal_code=data.client.postal_code, street=data.client.street,
+                                           quantity=generated_inv.quantity, date=generated_inv.invoice_date,
+                                           inv_date=date.today(),
+                                           total_price=generated_inv.total_price)
+            html = HTML(string=rendered_pdf)
+            generated_pdf = html.write_pdf()
+            return send_file(
+                io.BytesIO(generated_pdf),
+                attachment_filename=f'Test_invoice.pdf'
+            )
+        except Exception as e:
+            flash(e, 'error')
 
     return redirect(url_for('view.view'))
