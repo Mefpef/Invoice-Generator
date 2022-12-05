@@ -1,6 +1,6 @@
 from flask import request, session, Blueprint, flash, redirect, url_for, render_template
 from flask_login import login_user
-
+from app.service.db import db
 from app.models.user import User
 
 login_blueprint = Blueprint('login', __name__)
@@ -23,6 +23,15 @@ def login():
 
 @register_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    pass
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        new_user = User(login=username, password=password)
+
+        new_user.set_password(password)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    else:
+        return render_template('register.html')

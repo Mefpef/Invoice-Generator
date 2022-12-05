@@ -9,4 +9,4 @@ class Product(db.Model):
     cn = db.Column(db.String(8))
     price = db.Column(db.Float, nullable=False)
     user_product_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    invoice = db.relationship('Invoice', backref='product_invoice', primary_key=True)
+    invoice = db.relationship('Invoice', backref='product_invoice')
