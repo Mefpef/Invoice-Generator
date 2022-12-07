@@ -1,37 +1,47 @@
 from flask import request, session, Blueprint, flash, redirect, url_for, render_template
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 from app.service.db import db
 from app.models.user import User
+from app.forms.register import RegisterForm
+from app.forms.login import LoginForm
 
 login_blueprint = Blueprint('login', __name__)
 register_blueprint = Blueprint('register', __name__)
+dashboard_blueprint = Blueprint('dashboard', __name__)
+logout_blueprint = Blueprint('logout', __name__)
 
-
-@login_blueprint.route('/login', methods=["POST"])
+@login_blueprint.route('/login', methods=["GET", "POST"])
 def login():
-    uname = request.form.get('username')
-    passwd = request.form.get('password')
-    session['username'] = uname
-    user = User.query.filter_by(login=uname, password=passwd).first()
-    if user:
-        login_user(user)
-        ulog = user.login
-        return render_template('dashboard.html', ulogin=ulog)
-    else:
-        return render_template("index.html")
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(login=form.login.data).first()
+        if user is not None and user.check_password(form.password.data):
+            login_user(user)
+            return redirect(url_for('dashboard.dashboard'))
+        flash('Invalid login or password')
+    return render_template("index.html", form=form)
 
 
 @register_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-
-        new_user = User(login=username, password=password)
-
-        new_user.set_password(password)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        new_user = User(login=form.login.data, password=form.password.data)
+        new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('login'))
-    else:
-        return render_template('register.html')
+        return redirect(url_for('login.login'))
+    return render_template('register.html', form=form)
+
+
+@dashboard_blueprint.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@logout_blueprint.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login.login'))
