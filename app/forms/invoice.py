@@ -6,5 +6,5 @@ from app.models.product import Product
 from app.models.contractor import Contractor
 
 class InvoiceForm(FlaskForm):
-    contractor = FloatField('Contractor')
-    product = DateField('Product')
+    contractor_query = FloatField('Contractor')
+    product_query = DateField('Product')

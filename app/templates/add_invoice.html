@@ -2,56 +2,32 @@
 {% block title %} <title>add_invoice</title> {% endblock %}
 
 
-
 {% block content %}
 <header class="w3-container w3-blue w3-center" style="padding:128px 25px">
-    <h1 class="w3-margin w3-xxlarge">Enter your invoice details.</h1>
+    <h2 class="w3-margin w3-xxlarge">Choose contractor</h2>
     <form action="#" method="POST">
         <form class="row g-2">
             <div class="row">
                 <div class="col-md-2">
-                    <label for="inputName" class="form-label">Contractor name</label>
+                    <label for="inputName" class="form-label"></label>
                     <input type="text" class="form-control" id="inputName">
                 </div>
-                <div class="col-md-2">
-                    <label for="inputLastName" class="form-label">Contracotr last name</label>
-                    <input type="text" class="form-control" id="inputLastName">
-                </div>
-                <div class="col-2">
-                    <label for="inputCity" class="form-label">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="Wroclaw">
-                </div>
-                <div class="col-2">
-                    <label for="inputPostalCode" class="form-label">Postal code</label>
-                    <input type="text" class="form-control" id="inputPostalCode"
-                           placeholder="Apartment, studio, or floor">
-                </div>
-                <div class="col-md-2">
-                    <label for="inputStreet" class="form-label">Street</label>
-                    <input type="text" class="form-control" id="inputStreet">
-                </div>
-                <div class="col-md-2">
-                    <label for="inputCompanyName" class="form-label">Company name</label>
-                    <input type="text" class="form-control" id="inputCompanyName">
-                </div>
-                <div class="col-md-2">
-                    <label for="inputPhoneNumber" class="form-label">Phone number</label>
-                    <input type="tel" class="form-control" id="inputPhoneNumber">
-                </div>
-                <div class="col-md-2">
-                    <label for="inputEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail">
-                </div>
-                <div class="col-md-2">
-                    <label for="inputTax" class="form-label">Tax number</label>
-                    <input type="text" class="form-control" id="inputTax">
-                </div>
-
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </form>
-    </form>
+                <h2 class="w3-margin w3-xxlarge">Choose product</h2>
+                <form action="#" method="POST">
+                    <form class="row g-3">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="inputName" class="form-label"></label>
+                                <input type="text" class="form-control" id="inputContractor">
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </form>
 </header>
 {% endblock %}
