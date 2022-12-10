@@ -6,21 +6,18 @@ from app.service.db import db
 
 from app.routes.user import login_blueprint, register_blueprint, dashboard_blueprint, logout_blueprint
 from app.routes.home import index_blueprint
-from app.routes.invoices import previews_blueprint, preview_blueprint, add_invoice_blueprint, \
-    delete_invoice_blueprint
+from app.routes.invoices import preview_blueprint, add_invoice_blueprint
 
 app = Flask(__name__)
 
 app.register_blueprint(index_blueprint)
 app.register_blueprint(login_blueprint)
-app.register_blueprint(add_invoice_blueprint)
-app.register_blueprint(previews_blueprint)
-app.register_blueprint(preview_blueprint)
-app.register_blueprint(download_blueprint)
-app.register_blueprint(delete_invoice_blueprint)
+app.register_blueprint(logout_blueprint)
 app.register_blueprint(register_blueprint)
 app.register_blueprint(dashboard_blueprint)
-app.register_blueprint(logout_blueprint)
+app.register_blueprint(add_invoice_blueprint)
+app.register_blueprint(preview_blueprint)
+app.register_blueprint(download_blueprint)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 login_manager.init_app(app)

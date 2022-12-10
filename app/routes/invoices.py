@@ -8,13 +8,12 @@ from app.utils.helpers import get_data_to_generate, add_client_to_db, count_tota
     add_product_to_db, get_actual_date, delete_set
 
 preview_blueprint = Blueprint('preview', __name__)
-previews_blueprint = Blueprint('previews', __name__)
 add_invoice_blueprint = Blueprint('create', __name__)
-delete_invoice_blueprint = Blueprint('delete', __name__)
 download_blueprint = Blueprint('download', __name__)
 
 
 @preview_blueprint.route('/preview/<id>', methods=['POST'])
+@login_required
 def preview(id):
     if request.method == "POST":
         generated_inv = User.invoice.query.get(id)
@@ -26,11 +25,6 @@ def preview(id):
                                total_price=generated_inv.total_price)
 
 
-@previews_blueprint.route('/previews', methods=['GET', 'POST'])
-@login_required
-def view():
-    user = User.query.all()
-    return render_template('previews.html', product=user)
 
 
 @add_invoice_blueprint.route('/add', methods=["POST", "GET"])
@@ -60,12 +54,6 @@ def create_invoice():
     return render_template('add_invoice.html', today=get_actual_date())
 
 
-@delete_invoice_blueprint.route('/delete/<id>', methods=['GET'])
-def delete(id):
-    if request.method == 'GET':
-        delete_set(id)
-
-    return redirect(url_for('view.view'))
 
 
 @download_blueprint.route('/download/<id>', methods=["POST"])
