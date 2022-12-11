@@ -1,7 +1,12 @@
 from flask import request, session, Blueprint, flash, redirect, url_for, render_template
 from flask_login import login_user, login_required, logout_user
+
+from app.forms.invoice import InvoiceForm
+from app.models.contractor import Contractor
+from app.models.product import Product
 from app.service.db import db
 from app.models.user import User
+from app.models.invoice import Invoice
 from app.forms.register import RegisterForm
 from app.forms.login import LoginForm
 
@@ -16,6 +21,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(login=form.login.data).first()
         if user is not None and user.check_password(form.password.data):
+            session['login'] = request.form['login']
             login_user(user)
             return redirect(url_for('dashboard.dashboard'))
         flash('Invalid login or password')
@@ -37,7 +43,14 @@ def register():
 @dashboard_blueprint.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    if 'login' in session:
+        user = session['login']
+        user = User.query.filter_by(login=user).first()
+        print(user.id)
+        invoice = Invoice.query.filter_by(user_id=user.id).first()
+        contractor = Contractor.query.filter_by(user_contractor_id=user.id).first()
+
+        return render_template('dashboard.html', invoice=invoice, contractor=contractor)
 
 
 @logout_blueprint.route("/logout")

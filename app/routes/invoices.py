@@ -1,12 +1,14 @@
 from datetime import date, datetime
 
-from flask import request, Blueprint, render_template, flash, redirect, url_for
+from flask import request, Blueprint, render_template, flash, redirect, url_for, session
 from flask_login import login_required
 
+from app.models.contractor import Contractor
 from app.models.user import User
-from app.utils.helpers import get_data_to_generate, add_client_to_db, count_total_price, add_invoice_to_db, \
-    add_product_to_db, get_actual_date, delete_set
-
+from app.utils.helpers import get_data_to_generate
+from app.models.product import Product
+from app.forms.contractor import ContractorForm
+from app.forms.product import ProductForm
 preview_blueprint = Blueprint('preview', __name__)
 add_invoice_blueprint = Blueprint('create', __name__)
 download_blueprint = Blueprint('download', __name__)
@@ -28,34 +30,22 @@ def preview(id):
 
 
 @add_invoice_blueprint.route('/add', methods=["POST", "GET"])
+@login_required
 def create_invoice():
-    if request.method == "POST":
-        name = request.form['name']
-        postal_code = request.form['postal_code']
-        street = request.form['street']
+    product_form = ProductForm()
+    contractor_form = ContractorForm()
 
-        new_client = User.contractor(name, postal_code, street)
-        add_client_to_db(new_client)
+    if 'login' in session:
+        user = session['login']
+        user = User.query.filter_by(login=user).first()
 
-        invoice_date = request.form['invoice_date']
-        quantity = request.form['quantity']
-        invoice_datetime = datetime.strptime(invoice_date, '%Y-%m-%d').date()
+        product_form.product_query.query = Product.query.filter_by(user_product_id=user.id)
+        contractor_form.contractor_query.query = Contractor.query.filter_by(user_contractor_id=user.id)
 
-        product_name = request.form['product_name']
-        price = request.form['price']
+        if product_form.validate_on_submit() and contractor_form.validate_on_submit():
+            return redirect(url_for('dashboard.dashboard'))
 
-        new_invoice = User.invoice(invoice_datetime, quantity, client_id=new_client.id,
-                                   total_price=count_total_price(price, quantity))
-        add_invoice_to_db(new_invoice)
-
-        new_product = User.product(product_name, price, invoice_id=new_invoice.id)
-        add_product_to_db(new_product)
-        flash('Invoice added successfully!', 'success')
-    return render_template('add_invoice.html', today=get_actual_date())
-
-
-
-
+        return render_template('add_invoice.html', product_form=product_form, contractor_form=contractor_form)
 @download_blueprint.route('/download/<id>', methods=["POST"])
 def download_pdf(id):
     if request.method == "POST":

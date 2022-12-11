@@ -10,3 +10,4 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     user_product_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     invoice = db.relationship('Invoice', backref='product_invoice')
+
