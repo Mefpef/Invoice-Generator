@@ -13,4 +13,4 @@ class ProductForm(FlaskForm):
     cn = StringField('CN', [validators.Length(min=8, max=8)])
     price = FloatField('Price')
     submit = SubmitField('Add')
-    product_query = QuerySelectField(query_factory=product_query, allow_blank=False, get_label='name, company_name')
+    products_query = QuerySelectField(query_factory=product_query, allow_blank=False, get_label='name')

@@ -3,31 +3,51 @@
 
 
 {% block content %}
-<header class="w3-container w3-blue w3-center" style="padding:128px 25px">
-    <h2 class="w3-margin w3-xxlarge">Choose contractor</h2>
-    <form action="#" method="POST">
-        <form class="row g-2">
-            <div class="row">
-                <div class="col-md-2">
-                    <label for="inputName" class="form-label">{{ contractor_form.contractor_query(class_="form-control rouded-3")  }}</label>
-                    <input type="text" class="form-control" id="inputName">
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Add invoice</h2>
+        <p class="lead">Please choose contractor and products for your invoice.</p>
+    </div>
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-7 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3"></h4>
+
+        </div>
+        <div class="col-md-5 col-lg-7">
+            <h4 class="mb-3">Invoice details</h4>
+            <form class="needs-validation" novalidate="">
+                <div class="col-12">
+                    <label class="form-label">Contractor</label>
+                    {{ contractor_form.contractors_query (class_="form-control") }}
+
                 </div>
-                <h2 class="w3-margin w3-xxlarge">Choose product</h2>
-                <form action="#" method="POST">
-                    <form class="row g-3">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="inputName" class="form-label">{{ product_form.product_query }}</label>
-                                <input type="text" class="form-control" id="inputContractor">
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                <hr class="my-4">
+
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="firstName" class="form-label">Product</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                        <div class="invalid-feedback">
+                            Valid first name is required.
                         </div>
-                    </form>
-                </form>
-</header>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="lastName" class="form-label">Last name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                        <div class="invalid-feedback">
+                            Valid last name is required.
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <hr class="my-4">
+
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

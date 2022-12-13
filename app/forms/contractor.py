@@ -7,13 +7,13 @@ def contractor_query():
     return Contractor.query
 
 class ContractorForm(FlaskForm):
-    name = StringField('Name')
-    last_name = StringField('Last Name')
-    city = StringField('City')
+    name = StringField('Name', [validators.Length(min=1, max=75)])
+    last_name = StringField('Last Name', [validators.Length(min=1, max=75)])
+    city = StringField('City', [validators.Length(max=40)])
     postal_code = StringField('Postal Code')
     street = StringField('Street')
     company_name = StringField('Company Name')
     phone_numer = StringField('Phone Number')
     email_address = StringField('E-Mail')
     tax_number = StringField('Tax Number')
-    contractor_query = QuerySelectField(query_factory=contractor_query, allow_blank=False, get_label='name')
+    contractors_query = QuerySelectField(query_factory=contractor_query, allow_blank=False, get_label=lambda s: '%s %s, %s, %s %s' % (s.name, s.last_name ,s.company_name, s.street, s.postal_code))

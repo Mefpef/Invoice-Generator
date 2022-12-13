@@ -39,8 +39,8 @@ def create_invoice():
         user = session['login']
         user = User.query.filter_by(login=user).first()
 
-        product_form.product_query.query = Product.query.filter_by(user_product_id=user.id)
-        contractor_form.contractor_query.query = Contractor.query.filter_by(user_contractor_id=user.id)
+        product_form.products_query.query = Product.query.filter_by(user_product_id=user.id)
+        contractor_form.contractors_query.query = Contractor.query.filter_by(user_contractor_id=user.id)
 
         if product_form.validate_on_submit() and contractor_form.validate_on_submit():
             return redirect(url_for('dashboard.dashboard'))
