@@ -12,7 +12,7 @@ from app.service.db import db
 from app.utils.helpers import get_data_to_generate
 
 preview_blueprint = Blueprint('preview', __name__)
-add_invoice_blueprint = Blueprint('create', __name__)
+add_invoice_blueprint = Blueprint('add_invoice', __name__)
 download_blueprint = Blueprint('download', __name__)
 
 
@@ -31,7 +31,7 @@ def preview(id):
 
 @add_invoice_blueprint.route('/add', methods=["POST", "GET"])
 @login_required
-def create_invoice():
+def add_invoice():
     form = InvoiceForm()
     if 'login' in session:
         user = session['login']

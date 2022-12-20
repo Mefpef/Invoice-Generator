@@ -1,8 +1,8 @@
 from flask import Flask
 
 from app.routes.home import index_blueprint
-from app.routes.invoices import download_blueprint
-from app.routes.invoices import preview_blueprint, add_invoice_blueprint
+from app.routes.products import add_product_blueprint
+from app.routes.invoices import preview_blueprint, add_invoice_blueprint, download_blueprint
 from app.routes.user import login_blueprint, register_blueprint, dashboard_blueprint, logout_blueprint
 from app.service.db import db
 from app.utils.login_auth import login_manager
@@ -17,6 +17,7 @@ app.register_blueprint(dashboard_blueprint)
 app.register_blueprint(add_invoice_blueprint)
 app.register_blueprint(preview_blueprint)
 app.register_blueprint(download_blueprint)
+app.register_blueprint(add_product_blueprint)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 login_manager.init_app(app)

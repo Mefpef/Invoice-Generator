@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} <title>add_product</title> {% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Add product</h2>
+        <p class="lead">Please fill data for your product.</p>
+    </div>
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-7 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3"></h4>
+
+        </div>
+        <div class="col-md-5 col-lg-7">
+            <h4 class="mb-3">Product card</h4>
+            <form action="{{ url_for ('add_product.add_product') }}" method="post">
+                {{ form.hidden_tag() }}
+                <div class="col-12">
+                    <label class="form-label">Product name</label>
+                    {{ form.name (class_="form-control") }}
+
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    {{ form.description (class_="form-control") }}
+
+                </div>
+                <hr class="my-4">
+
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="form-label">PKWiU</label>
+                        {{ form.pkwiu (class_="form-control") }}
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="form-label">CN</label>
+                        {{ form.cn(class_="form-control") }}
+
+                    </div>
+                                        <div class="col-sm-6">
+                        <label class="form-label">Price</label>
+                        {{ form.price(class_="form-control") }}
+
+                    </div>
+
+
+                </div>
+
+                <hr class="my-4">
+
+                {{ form.submit (class_="w-100 btn btn-primary btn-lg") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

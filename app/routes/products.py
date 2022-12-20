@@ -23,3 +23,4 @@ def add_product():
             db.session.commit()
 
             return redirect(url_for('dashboard.dashboard'))
+    return render_template('add_product.html', form=form)
