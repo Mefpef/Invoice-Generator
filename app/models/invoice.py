@@ -1,6 +1,6 @@
 import datetime
-from app.service.db import db
 
+from app.service.db import db
 
 
 class Invoice(db.Model):

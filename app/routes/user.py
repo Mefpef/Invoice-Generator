@@ -1,14 +1,12 @@
 from flask import request, session, Blueprint, flash, redirect, url_for, render_template
 from flask_login import login_user, login_required, logout_user
 
-from app.forms.invoice import InvoiceForm
-from app.models.contractor import Contractor
-from app.models.product import Product
-from app.service.db import db
-from app.models.user import User
-from app.models.invoice import Invoice
-from app.forms.register import RegisterForm
 from app.forms.login import LoginForm
+from app.forms.register import RegisterForm
+from app.models.contractor import Contractor
+from app.models.invoice import Invoice
+from app.models.user import User
+from app.service.db import db
 
 login_blueprint = Blueprint('login', __name__)
 register_blueprint = Blueprint('register', __name__)
@@ -46,10 +44,8 @@ def dashboard():
     if 'login' in session:
         user = session['login']
         user = User.query.filter_by(login=user).first()
-        print(user.id)
         invoice = Invoice.query.filter_by(user_id=user.id).first()
         contractor = Contractor.query.filter_by(user_contractor_id=user.id).first()
-
         return render_template('dashboard.html', invoice=invoice, contractor=contractor)
 
 

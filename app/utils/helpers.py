@@ -1,10 +1,9 @@
-from app.models.invoice import Invoice
-from app.models.contractor import Contractor
-from app.models.product import Product
-
-from datetime import date
 from collections import namedtuple
+from datetime import date
 
+from app.models.contractor import Contractor
+from app.models.invoice import Invoice
+from app.models.product import Product
 from app.service.db import db
 
 

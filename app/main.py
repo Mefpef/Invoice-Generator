@@ -1,12 +1,11 @@
 from flask import Flask
 
-from app.routes.invoices import download_blueprint
-from app.utils.login_auth import login_manager
-from app.service.db import db
-
-from app.routes.user import login_blueprint, register_blueprint, dashboard_blueprint, logout_blueprint
 from app.routes.home import index_blueprint
+from app.routes.invoices import download_blueprint
 from app.routes.invoices import preview_blueprint, add_invoice_blueprint
+from app.routes.user import login_blueprint, register_blueprint, dashboard_blueprint, logout_blueprint
+from app.service.db import db
+from app.utils.login_auth import login_manager
 
 app = Flask(__name__)
 

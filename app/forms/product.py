@@ -1,10 +1,6 @@
-from wtforms import validators, StringField, SubmitField, FloatField
 from flask_wtf import FlaskForm
-from wtforms_sqlalchemy.fields import QuerySelectField
-from app.models.product import Product
+from wtforms import validators, StringField, SubmitField, FloatField
 
-def product_query():
-    return Product.query
 
 class ProductForm(FlaskForm):
     name = StringField('Product name', [validators.Length(min=1, max=75)])
@@ -13,4 +9,3 @@ class ProductForm(FlaskForm):
     cn = StringField('CN', [validators.Length(min=8, max=8)])
     price = FloatField('Price')
     submit = SubmitField('Add')
-    products_query = QuerySelectField(query_factory=product_query, allow_blank=False, get_label='name')

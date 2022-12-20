@@ -16,24 +16,13 @@
         <th scope="col">Invoice ID</th>
         <th scope="col">Contractor</th>
         <th scope="col">Invoice Date</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Total items quantity</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td>data</td>
+        <td>{{ invoice.id }}</td>
         <td>{{ contractor.company_name }}</td>
-        <td>placeholder</td>
-        <td>text</td>
-        <td>text</td>
-    </tr>
-    <tr>
-        <td>1,002</td>
-        <td>placeholder</td>
-        <td>irrelevant</td>
-        <td>visual</td>
-        <td>layout</td>
+        <td>{{ invoice.invoice_date }}</td>
     </tr>
     </tbody>
 </table>
